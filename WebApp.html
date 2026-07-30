@@ -1,0 +1,1107 @@
+<!doctype html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+
+      :root {
+        --bg: #f0f2f5;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --accent: #0f766e;
+        --accent-hover: #0d5f57;
+        --accent-light: #e6f4f1;
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+        --warn: #d97706;
+        --warn-light: #fffbeb;
+        --added: #1d4ed8;
+        --added-light: #eff6ff;
+        --modified: #7c3aed;
+        --modified-light: #f5f3ff;
+        --shadow-sm:
+          0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --radius: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      main {
+        max-width: 1020px;
+        margin: 0 auto;
+        padding: 28px 16px 60px;
+      }
+
+      /* ── Header ── */
+      header {
+        margin-bottom: 20px;
+      }
+      header h1 {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        margin-bottom: 4px;
+      }
+      header p {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* ── Section Panel ── */
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-bottom: 14px;
+        box-shadow: var(--shadow-sm);
+      }
+      .panel-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 14px;
+      }
+
+      /* ── Summary Tiles ── */
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      .tile {
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px 14px;
+      }
+      .tile-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+      .tile-value {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      /* ── Form Controls ── */
+      label.field-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 5px;
+      }
+      select,
+      textarea,
+      input[type='text'] {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fff;
+        color: var(--text);
+        padding: 8px 10px;
+        font: inherit;
+        font-size: 13.5px;
+        transition: border-color 0.15s;
+        outline: none;
+      }
+      select:focus,
+      textarea:focus,
+      input[type='text']:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+      }
+      textarea {
+        min-height: 72px;
+        resize: vertical;
+      }
+
+      /* ── Grid Layouts ── */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      /* ── Buttons ── */
+      button {
+        border: 0;
+        border-radius: 7px;
+        padding: 9px 14px;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+        white-space: nowrap;
+      }
+      button:active {
+        transform: scale(0.98);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+
+      .btn-secondary {
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid var(--line);
+      }
+      .btn-secondary:hover {
+        background: #e9eaec;
+      }
+
+      .btn-danger {
+        background: var(--danger-light);
+        color: var(--danger);
+        border: 1px solid #fca5a5;
+      }
+      .btn-danger:hover {
+        background: #fee2e2;
+      }
+
+      .btn-icon {
+        padding: 6px 8px;
+        font-size: 15px;
+        line-height: 1;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+      }
+      .btn-icon:hover {
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .token-btn {
+        padding: 5px 9px;
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--accent-light);
+        color: var(--accent);
+        border: 1px solid #9bd0cc;
+        border-radius: 20px;
+        margin: 3px 3px 0 0;
+        transition: background 0.15s;
+      }
+      .token-btn:hover {
+        background: #c9ece8;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      /* ── Checkboxes ── */
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 13px;
+      }
+      .check-row:last-child {
+        border-bottom: 0;
+      }
+      .check-row input[type='checkbox'] {
+        width: 15px;
+        height: 15px;
+        accent-color: var(--accent);
+        cursor: pointer;
+      }
+      .check-row label {
+        cursor: pointer;
+        font-weight: 400;
+        color: var(--text);
+      }
+      .check-note {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+
+      /* ── Preview Table ── */
+      .preview-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .preview-count {
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .preview-search {
+        flex: 1;
+        max-width: 240px;
+        min-width: 120px;
+      }
+      .preview-search input {
+        padding: 6px 10px;
+        font-size: 13px;
+        border-radius: 7px;
+      }
+
+      .preview-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .preview-table th {
+        text-align: left;
+        padding: 8px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border-bottom: 2px solid var(--line);
+        background: var(--bg);
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      .preview-table td {
+        padding: 9px 10px;
+        border-bottom: 1px solid #f3f4f6;
+        vertical-align: middle;
+      }
+      .preview-table tr:last-child td {
+        border-bottom: 0;
+      }
+      .preview-table tr:hover td {
+        background: #f9fafb;
+      }
+
+      .row-num {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 500;
+        text-align: center;
+        width: 42px;
+      }
+      .display-name {
+        font-weight: 600;
+        color: var(--text);
+      }
+      .meta-text {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 1px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 2px 7px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      .badge-error {
+        background: var(--danger-light);
+        color: var(--danger);
+      }
+      .badge-warn {
+        background: var(--warn-light);
+        color: var(--warn);
+      }
+      .badge-added {
+        background: var(--added-light);
+        color: var(--added);
+      }
+      .badge-modified {
+        background: var(--modified-light);
+        color: var(--modified);
+      }
+
+      .row-deleted td {
+        opacity: 0.4;
+        text-decoration: line-through;
+        background: #fef2f2 !important;
+      }
+
+      .preview-wrapper {
+        max-height: 520px;
+        overflow-y: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      /* ── Modal ── */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: fadeIn 0.15s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal {
+        background: #fff;
+        border-radius: var(--radius);
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-md);
+        animation: slideUp 0.18s ease;
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(12px);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 20px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .modal-title {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .modal-body {
+        padding: 18px 20px;
+      }
+      .modal-footer {
+        padding: 14px 20px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      .form-row {
+        margin-bottom: 12px;
+      }
+      .form-row:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── Status Bar ── */
+      .status-bar {
+        margin-top: 16px;
+        min-height: 24px;
+        font-size: 13px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .status-bar.loading::before {
+        content: '';
+        width: 14px;
+        height: 14px;
+        border: 2px solid var(--line);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        flex-shrink: 0;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .status-error {
+        color: var(--danger);
+      }
+      .status-ok {
+        color: var(--accent);
+      }
+
+      /* ── Warning ── */
+      .alert {
+        padding: 9px 12px;
+        border-radius: 7px;
+        font-size: 12.5px;
+        margin-bottom: 8px;
+      }
+      .alert-warn {
+        background: var(--warn-light);
+        color: #92400e;
+        border: 1px solid #fcd34d;
+      }
+      .alert-error {
+        background: var(--danger-light);
+        color: #991b1b;
+        border: 1px solid #fca5a5;
+      }
+
+      /* ── Inline loading ── */
+      #app {
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      #app.loaded {
+        display: block;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 720px) {
+        .summary {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+          grid-template-columns: 1fr;
+        }
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .preview-toolbar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .preview-search {
+          max-width: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>📋 회사 전화번호부 동기화</h1>
+        <p>
+          공식 전화번호부를 읽어 내 Google 주소록에 개인별 이름 형식으로
+          등록합니다.
+        </p>
+      </header>
+      <div id="app">불러오는 중…</div>
+    </main>
+
+    <!-- Edit Modal -->
+    <div
+      id="modal-backdrop"
+      class="modal-backdrop"
+      style="display: none"
+      onclick="closeModalOnBackdrop(event)"
+    >
+      <div class="modal" id="edit-modal">
+        <div class="modal-header">
+          <span class="modal-title" id="modal-title">연락처 편집</span>
+          <button class="btn-icon" onclick="closeModal()" title="닫기">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal()">취소</button>
+          <button class="btn-primary" id="modal-save-btn" onclick="saveModal()">
+            저장
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let state = null;
+      // rowOverrides: { rowNumber: { header: value, ... } }
+      let rowOverrides = {};
+      // addedRows: [ { header: value, ... }, ... ]
+      let addedRows = [];
+      // deletedRows: [ rowNumber, ... ]
+      let deletedRows = [];
+      // search filter
+      let searchQuery = '';
+      // modal context
+      let modalCtx = null;
+      // debounce timer
+      let previewTimer = null;
+
+      // ──────────────── INIT ────────────────
+      function init() {
+        google.script.run
+          .withSuccessHandler((nextState) => {
+            state = nextState;
+            document.getElementById('app').classList.add('loaded');
+            render();
+          })
+          .withFailureHandler(showError)
+          .getInitialState();
+      }
+
+      // ──────────────── RENDER ────────────────
+      function render() {
+        const app = document.getElementById('app');
+        app.innerHTML = `
+          <!-- Summary -->
+          <div class="panel">
+            <div class="summary">
+              <div class="tile"><div class="tile-label">전화번호부</div><div class="tile-value" title="${escAttr(state.spreadsheetName)}">${escHtml(truncate(state.spreadsheetName, 18))}</div></div>
+              <div class="tile"><div class="tile-label">시트</div><div class="tile-value">${escHtml(state.sheetName)}</div></div>
+              <div class="tile"><div class="tile-label">원본 행 수</div><div class="tile-value">${state.totalRows}명</div></div>
+              <div class="tile"><div class="tile-label">읽은 시간</div><div class="tile-value" style="font-size:13px">${escHtml(state.lastUpdated)}</div></div>
+            </div>
+            <p style="margin-top:8px;font-size:12px;color:var(--muted)">헤더 ${state.headerRow}행 · 범위 ${columnName(state.startColumn)}~${columnName(state.endColumn)}</p>
+            ${state.warnings.map((w) => `<div class="alert alert-warn" style="margin-top:8px">⚠️ ${escHtml(w)}</div>`).join('')}
+          </div>
+
+          <!-- Mapping -->
+          <div class="panel">
+            <div class="panel-title">열 매핑</div>
+            <div class="grid-4">
+              ${fieldSelect('name', '이름 *')}
+              ${fieldSelect('phone', '전화번호 *')}
+              ${fieldSelect('email', '이메일')}
+              ${fieldSelect('company', '회사')}
+              ${fieldSelect('department', '부서')}
+              ${fieldSelect('title', '직급/직책')}
+              ${fieldSelect('note', '메모')}
+            </div>
+          </div>
+
+          <!-- Template & Options -->
+          <div class="panel">
+            <div class="panel-title">주소록 설정</div>
+            <div class="grid-2" style="margin-bottom:12px">
+              <div>
+                <label class="field-label" for="labelName">Google 주소록 라벨</label>
+                <input id="labelName" type="text" value="${escAttr(state.labelName || '회사 전화번호부')}" oninput="onSettingChange()">
+              </div>
+              <div>
+                <label class="field-label" for="template">이름 양식</label>
+                <textarea id="template" rows="1" style="min-height:38px;resize:none" oninput="onSettingChange()">${escHtml(state.template)}</textarea>
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              ${state.headers.map((h) => `<button class="token-btn" onclick="addToken('${escAttr(h)}')">${escHtml(h)}</button>`).join('')}
+            </div>
+            <div>
+              <div class="check-row">
+                <input type="checkbox" id="saveSettings" ${state.options.saveSettings ? 'checked' : ''} onchange="onSettingChange()">
+                <div><label for="saveSettings">이 설정을 다음에도 사용</label></div>
+              </div>
+              <div class="check-row">
+                <input type="checkbox" id="smartSync" ${state.options.smartSync ? 'checked' : ''} onchange="onSettingChange()">
+                <div><label for="smartSync">스마트 동기화 (변경된 항목만 업데이트)</label></div>
+              </div>
+              <div class="check-row">
+                <input type="checkbox" id="skipRowsWithoutPhone" ${state.options.skipRowsWithoutPhone ? 'checked' : ''} onchange="onSettingChange()">
+                <div><label for="skipRowsWithoutPhone">전화번호 없는 행 제외</label></div>
+              </div>
+              <div class="check-row">
+                <input type="checkbox" id="fillMergedLikeBlanks" ${state.options.fillMergedLikeBlanks ? 'checked' : ''} onchange="onSettingChange()">
+                <div><label for="fillMergedLikeBlanks">병합된 셀처럼 빈칸은 위 값으로 채우기</label></div>
+              </div>
+              <div class="check-row">
+                <input type="checkbox" id="showLowestDepartmentOnly" ${state.options.showLowestDepartmentOnly ? 'checked' : ''} onchange="onSettingChange()">
+                <div><label for="showLowestDepartmentOnly">가장 하위 부서만 표시 (계층 > 숨김)</label></div>
+              </div>
+              
+              <div class="check-row" style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line);">
+                <input type="checkbox" id="autoSync" ${state.autoSyncEnabled ? 'checked' : ''} onchange="toggleAutoSyncUI()">
+                <div>
+                  <label for="autoSync" style="font-weight: 700; color: var(--accent);">⏰ 매일 새벽 자동 동기화 (내 계정)</label>
+                  <div class="check-note">스위치를 켜두면 매일 새벽 2시경 내 구글 주소록을 백그라운드에서 갱신합니다.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="panel">
+            <div class="panel-title">미리보기</div>
+            <div id="status-bar" class="status-bar"></div>
+            <div class="preview-toolbar">
+              <div class="preview-count" id="preview-count"></div>
+              <div class="preview-search">
+                <input type="text" placeholder="🔍 이름·전화번호 검색" value="${escAttr(searchQuery)}"
+                  oninput="searchQuery=this.value;renderPreviewTable()" style="width:100%">
+              </div>
+              <div class="actions">
+                <button class="btn-secondary" onclick="addRowModal()">+ 행 추가</button>
+                <button class="btn-secondary" onclick="resetEdits()">편집 초기화</button>
+                <button class="btn-primary" onclick="syncContacts()">이대로 동기화</button>
+              </div>
+            </div>
+            <div class="preview-wrapper">
+              <table class="preview-table">
+                <thead>
+                  <tr>
+                    <th class="row-num">#</th>
+                    <th>표시 이름</th>
+                    <th>전화번호</th>
+                    <th>이메일</th>
+                    <th>상태</th>
+                    <th style="width:88px;text-align:center">편집</th>
+                  </tr>
+                </thead>
+                <tbody id="preview-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        `;
+
+        renderPreviewTable();
+      }
+
+      function renderPreviewTable() {
+        const tbody = document.getElementById('preview-tbody');
+        const countEl = document.getElementById('preview-count');
+        if (!tbody || !state) return;
+
+        const items = state.preview || [];
+        const q = searchQuery.toLowerCase().trim();
+        const filtered = q
+          ? items.filter(
+              (item) =>
+                (item.displayName || '').toLowerCase().includes(q) ||
+                (item.phone || '').toLowerCase().includes(q) ||
+                (item.email || '').toLowerCase().includes(q),
+            )
+          : items;
+
+        const deleted = new Set(deletedRows);
+        const visible = filtered;
+        const totalShown = visible.filter(
+          (i) => !deleted.has(i.rowNumber),
+        ).length;
+        const totalDeleted = deleted.size;
+        const totalAdded = addedRows.length;
+
+        if (countEl) {
+          let summary = `총 ${totalShown}명`;
+          if (totalAdded)
+            summary += ` · <span style="color:var(--added)">+${totalAdded} 추가</span>`;
+          if (totalDeleted)
+            summary += ` · <span style="color:var(--danger)">−${totalDeleted} 삭제</span>`;
+          const modified = Object.keys(rowOverrides).length;
+          if (modified)
+            summary += ` · <span style="color:var(--modified)">${modified} 수정</span>`;
+          countEl.innerHTML = summary;
+        }
+
+        if (!visible.length) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted)">${q ? '검색 결과가 없습니다.' : '데이터가 없습니다.'}</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = visible
+          .map((item) => {
+            const isDel = deleted.has(item.rowNumber);
+            const rowClass = isDel ? 'row-deleted' : '';
+            const rowNumDisplay = item.added
+              ? `<span style="color:var(--added)">+</span>`
+              : item.rowNumber;
+
+            let statusHtml = '';
+            if (item.added)
+              statusHtml = `<span class="badge badge-added">추가</span>`;
+            else if (isDel)
+              statusHtml = `<span class="badge badge-error">삭제예정</span>`;
+            else if (item.overridden)
+              statusHtml = `<span class="badge badge-modified">수정됨</span>`;
+            else if (!item.valid)
+              statusHtml = `<span class="badge badge-warn">확인필요</span>`;
+
+            const editBtns = isDel
+              ? `<button class="btn-icon" title="삭제 취소" onclick="undeleteRow(${JSON.stringify(item.rowNumber)})">↩</button>`
+              : `<button class="btn-icon" title="편집" onclick="editRowModal(${JSON.stringify(item.rowNumber)})">✏️</button>
+               ${!item.added ? `<button class="btn-icon" title="삭제" onclick="deleteRow(${JSON.stringify(item.rowNumber)})">🗑</button>` : `<button class="btn-icon" title="취소" onclick="removeAddedRow(${JSON.stringify(item.rowNumber)})">✕</button>`}`;
+
+            return `<tr class="${rowClass}" data-row="${item.rowNumber}">
+            <td class="row-num">${rowNumDisplay}</td>
+            <td>
+              <div class="display-name">${escHtml(item.displayName || '(이름 없음)')}</div>
+              ${item.record && item.record['부서'] ? `<div class="meta-text">${escHtml(item.record['부서'] || '')}</div>` : ''}
+            </td>
+            <td style="font-size:13px">${escHtml(item.phone || '—')}</td>
+            <td style="font-size:12px;color:var(--muted)">${escHtml(item.email || '—')}</td>
+            <td>${statusHtml}</td>
+            <td style="text-align:center;white-space:nowrap">${editBtns}</td>
+          </tr>`;
+          })
+          .join('');
+      }
+
+      // ──────────────── SETTINGS CHANGE (auto preview) ────────────────
+      function onSettingChange() {
+        readFormIntoState();
+        clearTimeout(previewTimer);
+        previewTimer = setTimeout(refreshPreviewFromServer, 350);
+      }
+
+      function readFormIntoState() {
+        const mapping = {};
+        [
+          'name',
+          'phone',
+          'email',
+          'company',
+          'department',
+          'title',
+          'note',
+        ].forEach((key) => {
+          const el = document.getElementById(`field-${key}`);
+          if (el && el.value) mapping[key] = el.value;
+        });
+        state.mapping = mapping;
+        const tpl = document.getElementById('template');
+        if (tpl) state.template = tpl.value;
+        const lbl = document.getElementById('labelName');
+        if (lbl) state.labelName = lbl.value;
+        state.options = {
+          saveSettings: !!document.getElementById('saveSettings')?.checked,
+          smartSync: !!document.getElementById(
+            'smartSync',
+          )?.checked,
+          skipRowsWithoutPhone: !!document.getElementById(
+            'skipRowsWithoutPhone',
+          )?.checked,
+          fillMergedLikeBlanks: !!document.getElementById(
+            'fillMergedLikeBlanks',
+          )?.checked,
+          showLowestDepartmentOnly: !!document.getElementById(
+            'showLowestDepartmentOnly',
+          )?.checked,
+        };
+      }
+
+      function toggleAutoSyncUI() {
+        const isChecked = document.getElementById('autoSync').checked;
+        readFormIntoState(); // 현재 설정값을 읽어옵니다.
+        
+        setStatus(isChecked ? '자동 동기화 설정 중 (트리거 설치)…' : '자동 동기화 해제 중 (트리거 삭제)…', 'loading');
+        
+        google.script.run
+          .withSuccessHandler((res) => {
+            if (res.enabled) {
+              setStatus('✅ 매일 새벽 2시 자동 동기화가 켜졌습니다. 이제 신경쓰지 않으셔도 됩니다!', 'ok');
+            } else {
+              setStatus('✅ 자동 동기화가 꺼졌습니다. 더 이상 백그라운드에서 동기화되지 않습니다.', 'ok');
+            }
+          })
+          .withFailureHandler((err) => {
+            showError(err);
+            document.getElementById('autoSync').checked = !isChecked; // 실패 시 스위치 원상복구
+          })
+          .toggleAutoSync({
+            enable: isChecked,
+            mapping: state.mapping,
+            template: state.template,
+            labelName: state.labelName,
+            options: state.options
+          });
+      }
+
+      function refreshPreviewFromServer() {
+        setStatus('미리보기 갱신 중…', 'loading');
+        google.script.run
+          .withSuccessHandler((preview) => {
+            state.preview = preview;
+            renderPreviewTable();
+            setStatus('미리보기 갱신 완료.', 'ok');
+          })
+          .withFailureHandler(showError)
+          .getPreview({
+            mapping: state.mapping,
+            template: state.template,
+            options: state.options,
+            rowOverrides,
+            addedRows,
+            deletedRows,
+          });
+      }
+
+      // ──────────────── FIELD SELECT ────────────────
+      function fieldSelect(key, label) {
+        const value = state.mapping[key] || '';
+        const options = ['']
+          .concat(state.headers)
+          .map((h) => {
+            const sel = h === value ? 'selected' : '';
+            return `<option value="${escAttr(h)}" ${sel}>${escHtml(h || '선택 안 함')}</option>`;
+          })
+          .join('');
+        return `<div>
+          <label class="field-label" for="field-${key}">${escHtml(label)}</label>
+          <select id="field-${key}" onchange="onSettingChange()">${options}</select>
+        </div>`;
+      }
+
+      // ──────────────── TOKEN INSERT ────────────────
+      function addToken(header) {
+        const ta = document.getElementById('template');
+        if (!ta) return;
+        const token = `{${header}}`;
+        const s =
+          ta.selectionStart != null ? ta.selectionStart : ta.value.length;
+        const e = ta.selectionEnd != null ? ta.selectionEnd : ta.value.length;
+        ta.value = ta.value.slice(0, s) + token + ta.value.slice(e);
+        ta.focus();
+        ta.selectionStart = ta.selectionEnd = s + token.length;
+        onSettingChange();
+      }
+
+      // ──────────────── ROW EDIT/ADD/DELETE ────────────────
+      function deleteRow(rowNumber) {
+        if (!deletedRows.includes(rowNumber)) deletedRows.push(rowNumber);
+        renderPreviewTable();
+      }
+
+      function undeleteRow(rowNumber) {
+        deletedRows = deletedRows.filter((r) => r !== rowNumber);
+        renderPreviewTable();
+      }
+
+      function removeAddedRow(addedIndex) {
+        // addedIndex is "+N" string; N is 1-based
+        const idx = parseInt(String(addedIndex).replace('+', ''), 10) - 1;
+        addedRows.splice(idx, 1);
+        refreshPreviewFromServer();
+      }
+
+      function resetEdits() {
+        if (!confirm('모든 편집(추가/수정/삭제)을 초기화할까요?')) return;
+        rowOverrides = {};
+        addedRows = [];
+        deletedRows = [];
+        refreshPreviewFromServer();
+      }
+
+      // ──────────────── MODAL ────────────────
+      function editRowModal(rowNumber) {
+        const item = (state.preview || []).find(
+          (i) => i.rowNumber === rowNumber,
+        );
+        if (!item) return;
+        const record = Object.assign(
+          {},
+          item.record,
+          rowOverrides[rowNumber] || {},
+        );
+
+        modalCtx = { mode: 'edit', rowNumber };
+        document.getElementById('modal-title').textContent =
+          `연락처 편집 (행 ${rowNumber})`;
+        document.getElementById('modal-body').innerHTML =
+          buildModalFields(record);
+        document.getElementById('modal-backdrop').style.display = 'flex';
+      }
+
+      function addRowModal() {
+        const emptyRecord = {};
+        state.headers.forEach((h) => (emptyRecord[h] = ''));
+        modalCtx = { mode: 'add' };
+        document.getElementById('modal-title').textContent = '새 연락처 추가';
+        document.getElementById('modal-body').innerHTML =
+          buildModalFields(emptyRecord);
+        document.getElementById('modal-backdrop').style.display = 'flex';
+      }
+
+      function buildModalFields(record) {
+        return state.headers
+          .map(
+            (h) => `
+          <div class="form-row">
+            <label class="field-label" for="mf-${escAttr(h)}">${escHtml(h)}</label>
+            <input type="text" id="mf-${escAttr(h)}" value="${escAttr(record[h] || '')}" placeholder="${escAttr(h)}">
+          </div>
+        `,
+          )
+          .join('');
+      }
+
+      function saveModal() {
+        if (!modalCtx) return;
+        const newRecord = {};
+        state.headers.forEach((h) => {
+          const el = document.getElementById(`mf-${h}`);
+          if (el) newRecord[h] = el.value;
+        });
+
+        if (modalCtx.mode === 'edit') {
+          rowOverrides[modalCtx.rowNumber] = newRecord;
+        } else {
+          addedRows.push(newRecord);
+        }
+
+        closeModal();
+        refreshPreviewFromServer();
+      }
+
+      function closeModal() {
+        document.getElementById('modal-backdrop').style.display = 'none';
+        modalCtx = null;
+      }
+
+      function closeModalOnBackdrop(e) {
+        if (e.target === document.getElementById('modal-backdrop'))
+          closeModal();
+      }
+
+      // ──────────────── SYNC ────────────────
+      function syncContacts() {
+        readFormIntoState();
+        setStatus(
+          'Google 주소록에 동기화하는 중입니다… 권한 요청이 나오면 승인해주세요.',
+          'loading',
+        );
+        google.script.run
+          .withSuccessHandler((result) => {
+            setStatus(
+              `✅ 완료: 추가 ${result.created}건, 수정 ${result.updated}건, 삭제 ${result.deleted}건, 제외 ${result.skipped}건, 오류 ${result.errors.length}건`,
+              result.errors.length ? '' : 'ok',
+            );
+            if (result.errors.length) {
+              const tbody = document.getElementById('preview-tbody');
+              if (tbody) {
+                result.errors.forEach((error) => {
+                  const tr = tbody.querySelector(
+                    `tr[data-row="${error.rowNumber}"]`,
+                  );
+                  if (tr) tr.style.background = 'var(--danger-light)';
+                });
+              }
+            }
+          })
+          .withFailureHandler(showError)
+          .syncMyContacts({
+            mapping: state.mapping,
+            template: state.template,
+            labelName: state.labelName,
+            options: state.options,
+            rowOverrides,
+            addedRows,
+            deletedRows,
+          });
+      }
+
+      // ──────────────── UTILS ────────────────
+      function setStatus(msg, type) {
+        const bar = document.getElementById('status-bar');
+        if (!bar) return;
+        bar.className = 'status-bar' + (type === 'loading' ? ' loading' : '');
+        if (type === 'ok')
+          bar.innerHTML = `<span class="status-ok">${escHtml(msg)}</span>`;
+        else if (type === 'error')
+          bar.innerHTML = `<span class="status-error">${escHtml(msg)}</span>`;
+        else bar.textContent = msg;
+      }
+
+      function showError(error) {
+        const msg = error && error.message ? error.message : String(error);
+        const bar = document.getElementById('status-bar');
+        if (bar)
+          bar.innerHTML = `<span class="status-error">❌ ${escHtml(msg)}</span>`;
+        else
+          document.getElementById('app').innerHTML =
+            `<div class="alert alert-error">${escHtml(msg)}</div>`;
+      }
+
+      function escHtml(v) {
+        return String(v == null ? '' : v)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function escAttr(v) {
+        return escHtml(v).replace(/`/g, '&#96;');
+      }
+
+      function truncate(v, n) {
+        const s = String(v || '');
+        return s.length > n ? s.slice(0, n) + '…' : s;
+      }
+
+      function columnName(index) {
+        let n = Number(index || 0),
+          name = '';
+        while (n > 0) {
+          const r = (n - 1) % 26;
+          name = String.fromCharCode(65 + r) + name;
+          n = Math.floor((n - 1) / 26);
+        }
+        return name || '?';
+      }
+
+      init();
+    </script>
+  </body>
+</html>
