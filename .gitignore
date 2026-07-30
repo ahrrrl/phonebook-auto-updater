@@ -1,0 +1,10 @@
+# Node modules
+node_modules/
+
+# Mac OS
+.DS_Store
+
+# Sensitive Data (Do not push these!)
+*.xlsx
+자료/
+*.png

@@ -1,4 +1,10 @@
-const OFFICIAL_SPREADSHEET_ID = '1MjkDDZ9TPUlofp4AC0UGByDjCAy9Flxgh1Pa3af5Mqc';
+function getOfficialSpreadsheetId_() {
+  const id = PropertiesService.getScriptProperties().getProperty('ERP_SPREADSHEET_ID');
+  if (!id || id.indexOf('여기에_') === 0) {
+    throw new Error('스크립트 속성에 ERP_SPREADSHEET_ID (공식 전화번호부 Google Sheet ID)를 설정해야 합니다.');
+  }
+  return id;
+}
 const OFFICIAL_SHEET_NAME = '비상연락망';
 const DEFAULT_LABEL_NAME = '회사 전화번호부';
 const USER_SETTINGS_KEY = 'contactSyncWebAppSettings.v1';
@@ -400,11 +406,8 @@ function checkPersonChanged_(existing, target) {
 }
 
 function analyzeOfficialSheet_() {
-    if (!OFFICIAL_SPREADSHEET_ID || OFFICIAL_SPREADSHEET_ID.indexOf('여기에_') === 0) {
-        throw new Error('WebApp_Code.gs의 OFFICIAL_SPREADSHEET_ID에 공식 전화번호부 Google Sheet ID를 넣어야 합니다.');
-    }
-
-    const spreadsheet = SpreadsheetApp.openById(OFFICIAL_SPREADSHEET_ID);
+    const spreadsheetId = getOfficialSpreadsheetId_();
+    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
     let sheet = null;
     
     if (OFFICIAL_SHEET_NAME) {

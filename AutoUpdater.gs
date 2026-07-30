@@ -185,7 +185,7 @@ function updateOfficialSheet_(tempSheetId) {
   }
 
   // 기존 공식 시트 열기
-  const officialSpreadsheet = SpreadsheetApp.openById(OFFICIAL_SPREADSHEET_ID);
+  const officialSpreadsheet = SpreadsheetApp.openById(getOfficialSpreadsheetId_());
   
   let officialSheet = null;
   if (OFFICIAL_SHEET_NAME) {
