@@ -650,20 +650,8 @@
             </div>
             <div>
               <div class="check-row">
-                <input type="checkbox" id="saveSettings" ${state.options.saveSettings ? 'checked' : ''} onchange="onSettingChange()">
-                <div><label for="saveSettings">이 설정을 다음에도 사용</label></div>
-              </div>
-              <div class="check-row">
-                <input type="checkbox" id="smartSync" ${state.options.smartSync ? 'checked' : ''} onchange="onSettingChange()">
-                <div><label for="smartSync">스마트 동기화 (변경된 항목만 업데이트)</label></div>
-              </div>
-              <div class="check-row">
-                <input type="checkbox" id="skipRowsWithoutPhone" ${state.options.skipRowsWithoutPhone ? 'checked' : ''} onchange="onSettingChange()">
-                <div><label for="skipRowsWithoutPhone">전화번호 없는 행 제외</label></div>
-              </div>
-              <div class="check-row">
-                <input type="checkbox" id="fillMergedLikeBlanks" ${state.options.fillMergedLikeBlanks ? 'checked' : ''} onchange="onSettingChange()">
-                <div><label for="fillMergedLikeBlanks">병합된 셀처럼 빈칸은 위 값으로 채우기</label></div>
+                <input type="checkbox" id="keepMissingContacts" ${state.options.keepMissingContacts ? 'checked' : ''} onchange="onSettingChange()">
+                <div><label for="keepMissingContacts">시트에 없는 기존 연락처 유지 (퇴사자 연락처 보존)</label></div>
               </div>
               <div class="check-row">
                 <input type="checkbox" id="showLowestDepartmentOnly" ${state.options.showLowestDepartmentOnly ? 'checked' : ''} onchange="onSettingChange()">
@@ -824,19 +812,12 @@
         const lbl = document.getElementById('labelName');
         if (lbl) state.labelName = lbl.value;
         state.options = {
-          saveSettings: !!document.getElementById('saveSettings')?.checked,
-          smartSync: !!document.getElementById(
-            'smartSync',
-          )?.checked,
-          skipRowsWithoutPhone: !!document.getElementById(
-            'skipRowsWithoutPhone',
-          )?.checked,
-          fillMergedLikeBlanks: !!document.getElementById(
-            'fillMergedLikeBlanks',
-          )?.checked,
-          showLowestDepartmentOnly: !!document.getElementById(
-            'showLowestDepartmentOnly',
-          )?.checked,
+          keepMissingContacts: !!document.getElementById('keepMissingContacts')?.checked,
+          showLowestDepartmentOnly: !!document.getElementById('showLowestDepartmentOnly')?.checked,
+          saveSettings: true,
+          smartSync: true,
+          skipRowsWithoutPhone: true,
+          fillMergedLikeBlanks: true,
         };
       }
 

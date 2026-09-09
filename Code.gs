@@ -41,6 +41,7 @@ function getInitialState() {
         saveSettings: true,
         showLowestDepartmentOnly: false,
         smartSync: true,
+        keepMissingContacts: false,
     }, settings.options || {});
 
     return {
@@ -157,6 +158,7 @@ function syncMyContacts(payload) {
         saveSettings: true,
         showLowestDepartmentOnly: false,
         smartSync: true,
+        keepMissingContacts: false,
     }, payload.options || {});
 
     const rowOverrides = payload.rowOverrides || {};
@@ -276,7 +278,7 @@ function syncMyContacts(payload) {
 
     // 삭제할 연락처 찾기
     const toDelete = [];
-    if (options.smartSync) {
+    if (!options.keepMissingContacts) {
         existingContacts.forEach(person => {
             if (!matchedExistingResourceNames.has(person.resourceName)) {
                 toDelete.push(person.resourceName);
